@@ -5,6 +5,7 @@ import App from '../App'
 const home = r =>require.ensure([],() => r(require('@/components/home')),'home')
 const living = r =>require.ensure([],() => r(require('@/components/living')),'living')
 const cook = r =>require.ensure([],() => r(require('@/components/cook')),'cook')
+const video = r =>require.ensure([],() => r(require('@/components/video/video')),'video')
 
 Vue.use(Router)
 
@@ -29,7 +30,11 @@ export default new Router({
       	{
       		path:'/cook',
       		component:cook
-      	}
+      	},
+        {
+          path:'/video',
+          component:video
+        }
       ]
     }
   ]

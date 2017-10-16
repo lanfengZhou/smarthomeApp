@@ -10,7 +10,7 @@
             <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#msite'"></use>
         </svg> -->
 		<!-- <slot name='logo'></slot> -->
-		<section class="head_goback" v-if="goBack" @click="$router.go(-1)">
+		<section class="head_goback" v-if="goBack" @click="back">
             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
                 <polyline points="12,18 4,9 12,0" style="fill:none;stroke:rgb(255,255,255);stroke-width:3"/>
             </svg>
@@ -34,11 +34,18 @@
 			}
 		},
 		methods:{
+			back(){
+				this.$router.go(-1);
+				// alert(this.timer);
+				if(this.timer){
+					clearInterval(this.timer);
+				}
+			},
 			showSlider(){
 				this.$emit('showSlider');
 			}
 		},
-		props: ['headTitle', 'goBack','showSide'],
+		props: ['headTitle', 'goBack','showSide','timer'],
 	}
 </script>
 <style lang="scss" scoped>

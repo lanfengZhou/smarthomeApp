@@ -7,7 +7,7 @@
  * 
  */
 
-let baseUrl = 'http://192.168.27.2:8080'; 
+let baseUrl = 'http://192.168.27.100:8080'; 
 let routerMode = 'history';
 let imgBaseUrl = 'http://images.cangdu.org/';
 
