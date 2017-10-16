@@ -113,9 +113,11 @@
         			<svg class="over_icon_style">
             			<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#video'"></use>
         			</svg><span>实时视频(点击查看)</span>
-        		</router-link>
-        		
+        		</router-link>	
         	</div>
+		</div>
+		<div class="ctrl" v-if="htitle=='数码相框'">
+			<tv></tv>
 		</div>
 		<div class="item1">
 			<div class="esc" @click="hide">x</div>
@@ -126,6 +128,7 @@
 
 <script >
 	import headTop from '../components/header/head'
+	import tv from '../components/tv/tv'
 	import {ledCtrl,curtainCtrl,doorCtrl,getTH,getProtect} from '../service/getData'
 	export default{
 		data(){
@@ -145,7 +148,8 @@
 			}
 		},
 		components:{
-			headTop
+			headTop,
+			tv
 		},
 		methods:{
 			show(type){
