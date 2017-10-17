@@ -43,21 +43,28 @@
 </script>
 <style lang="scss" scoped>
 	@import '../../style/mixin';
-	#sideBar{
-	}
 	.roomlist{
-		/*@include wh(100%, 100%);*/
+		@include wh(100%,100%);
+    	/*@include allcover_left;*/
 		ul{
 			list-style: none;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%,-50%);
-		},
-		li{
-			width: 100px;
-			text-align: bottom;
-			margin-top: 2rem;
+			@include wh(100%,100%);
+			@include fj(center);
+			flex-flow: column nowrap;
+			text-align: center;
+			margin-top:-4rem;
+			/*background-color: #f00;*/
+			li{
+				/*flex: 1;*/
+				/*margin-bottom: 4rem;*/
+				@include wh(100%,3rem);
+				text-align: bottom;
+				margin-top: 5rem;
+				span{
+					color: #fff;
+				}
+				
+			}
 		}
 	}
 	.icon_style{

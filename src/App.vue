@@ -19,6 +19,11 @@ import svgIcon from './components/svg';
 </script>
 
 <style lang="scss">
+  #app{
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+  }
   @import './style/common';
   .router-fade-enter-active, .router-fade-leave-active {
         transition: opacity .3s;

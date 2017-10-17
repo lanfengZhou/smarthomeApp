@@ -108,7 +108,7 @@
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#irCurtain'"></use>
         		</svg><span>红外幕帘:{{irCurtainValue}}</span>
         	</div>
-        	<div class="item1 video">
+        	<div class="item1 video" @click="preview">
         		<router-link :to="'/video'">
         			<svg class="over_icon_style">
             			<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#video'"></use>
@@ -144,7 +144,8 @@
 				buttonValue:'',
 				irSensorValue:'',
 				irCurtainValue:'',
-				th_timer:''
+				th_timer:'',
+				protect_timer:''
 			}
 		},
 		components:{
@@ -156,9 +157,9 @@
 				// console.log("212");
 				this.showflag=true;
 				this.htitle=type;
+				let that=this;
 				if(type=='环境'){
-					let that=this;
-					that.tempValue="ffs";
+					// that.tempValue="ffs";
 					function getData(){
 						getTH().then(res => {
 							// this.tempValue=res;
@@ -169,23 +170,28 @@
 					}
 					getData();
 				}else if(type=='安防'){
-					getProtect().then(res => {
-						this.buttonValue=res.button=='true'?'打开':'关闭';
-						this.irSensorValue=res.irSensor=='true'?'有人':'没人';
-						this.irCurtainValue=res.irCurtain=='true'?'打开':'关闭';
-					})
+					function getPdata(){
+						getProtect().then(res => {
+							that.buttonValue=res.button=='true'?'打开':'关闭';
+							that.irSensorValue=res.irSensor=='true'?'有人':'没人';
+							that.irCurtainValue=res.irCurtain=='true'?'打开':'关闭';
+						})
+						that.protect_timer=setTimeout(getPdata,1000);
+					}
+					getPdata();
 				}
 			},
 			hide(){
 				this.showflag=false;
 				clearTimeout(this.th_timer);
+				clearTimeout(this.protect_timer);
 			},
 			ctrl(type){
 				if(this[type]=='#switchon'){
 					this[type]='#switchoff';
-					this.ctrlType(type,'on');
-				}else{
 					this.ctrlType(type,'off');
+				}else{
+					this.ctrlType(type,'on');
 					this[type]='#switchon';
 				}
 			},
@@ -193,11 +199,11 @@
 				if(status=='on'){
 					switch(type){
 						case 'dLed' :
-							ledCtrl('3-2').then(res => {
+							ledCtrl('3-1').then(res => {
 			        		});
 			        		break;
 			        	case 'fLed':
-			        		ledCtrl('3-4').then(res => {});
+			        		ledCtrl('3-3').then(res => {});
 			        		break;
 			        	case 'curtain':
 			        		curtainCtrl('open').then(res =>{});
@@ -209,11 +215,11 @@
 				}else{
 					switch(type){
 						case 'dLed' :
-							ledCtrl('3-1').then(res => {
+							ledCtrl('3-2').then(res => {
 			        		});
 			        		break;
 			        	case 'fLed':
-			        		ledCtrl('3-3').then(res => {
+			        		ledCtrl('3-4').then(res => {
 			        		});
 			        		break;
 			        	case 'curtain':
@@ -225,6 +231,10 @@
 					}
 				}
 				
+			},
+			preview(){
+				this.showflag=false;
+				clearTimeout(this.protect_timer);
 			}
 		},
 		watch:{

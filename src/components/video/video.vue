@@ -59,6 +59,9 @@
 			}
 			
 		},
+		mounted(){
+		
+		},
 		components:{
 			headTop
 		},
@@ -69,9 +72,8 @@
 				clearInterval(this.cameratimer);
 				this.timer=this.cameratimer;
 				this.cameratimer=setInterval(function(){
-					that.imgsrc=that.imgurl+'/camera/getImage?'+Math.random();
-					// ele.setAttribute('src',that.imgurl+'/camera/getImage?'+Math.random());
-				},400);
+					that.imgsrc=that.imgurl+'/camera/getImage?'+new Date().getTime();
+				},500);
 			},
 			videoCtrl(dir){
 				ptzCtrl(dir).then(res =>{})

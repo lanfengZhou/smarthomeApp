@@ -3,71 +3,92 @@
 		<div class="top">
 			<ul>
 				<li>
-					<div class="power">开关</div><div>设置</div><div class="menu">菜单</div>
+					<div class="power" @click="tvCtrl('key1')" @touchstart="touchS($event)" @touchend="touchE($event)">开关</div>
+					<div  @click="tvCtrl('key2')">设置</div>
+					<div class="menu"  @click="tvCtrl('key3')">菜单</div>
 				</li>
-				<li><div>图片</div><div>音乐</div><div>视频</div></li>
-				<li><div>返回</div><div><span class="up">《</span></div><div>功能</div></li>
-				<li><div>《</div><div>确认</div><div>》</div></li>
-				<li><div>音量＋</div><div><span class="down">》</span></div><div>放大</div></li>
-				<li><div>音量－</div><div>快进</div><div>缩小</div></li>
-				<li><div>静音</div><div>快退</div><div>菜单</div></li>
+				<li>
+					<div @click="tvCtrl('key4')">图片</div>
+					<div @click="tvCtrl('key5')">音乐</div>
+					<div @click="tvCtrl('key6')">视频</div></li>
+				<li>
+					<div @click="tvCtrl('key7')">返回</div>
+					<div  @click="tvCtrl('key8')"><span class="up">《</span></div>
+					<div  @click="tvCtrl('key9')">功能</div>
+				</li>
+				<li>
+					<div  @click="tvCtrl('key10')">《</div>
+					<div  @click="tvCtrl('key11')">确认</div>
+					<div  @click="tvCtrl('key12')">》</div>
+				</li>
+				<li>
+					<div  @click="tvCtrl('key13')">音量＋</div>
+					<div  @click="tvCtrl('key14')"><span class="down">》</span></div>
+					<div  @click="tvCtrl('key15')">放大</div></li>
+				<li>
+					<div  @click="tvCtrl('key16')">音量－</div>
+					<div  @click="tvCtrl('key17')">快进</div>
+					<div  @click="tvCtrl('key18')">缩小</div>
+				</li>
+				<li>
+					<div  @click="tvCtrl('key19')">静音</div>
+					<div  @click="tvCtrl('key20')">快退</div>
+					<div  @click="tvCtrl('key21')">口</div>
+				</li>
 			</ul>
 		</div>
+		<div class="tip">{{msg}}</div>
 	</div>
 </template>
 
 <script >
+	import {tvCtrl,tvLearn} from '../../service/getData'
 	export default{
 		data(){
 			return {
 				order:'',
 				timer:'',
-				ctrltype:'/run/audio/irControl',
-				powerStatus:false
+				// ctrltype:'/run/audio/irControl',
+				ctrlStatus:true,
+				msg:''
 			}
 		},
 		methods:{
-			mouseDown(){
+			touchS(e){
+				e.preventDefault();
 				var that=this;
 				this.timer=setTimeout(function(){
-					if(that.ctrltype=='/run/audio/irLearn'){
-						that.ctrltype='/run/audio/irControl';
-						alert('退出学习状态');
-						console.log('退出学习状态');
+					if(!that.ctrlStatus){
+						// that.msg="退出学习状态"
+						that.ctrlStatus=true;
+						that.msg="";
 					}else{
-						that.ctrltype='/run/audio/irLearn';
-						alert('进入学习状态');
-						console.log('进入学习状态');
+						that.msg="进入学习状态"
+						that.ctrlStatus=false;
+						// e.returnValue = true;
 					}
 				},3000)
 			},
-			mouseUp(){
+			touchE(e){
 				clearTimeout(this.timer);
 			},
-			powerCtrl(){
-				console.log(this.ctrltype);
-				if(this.powerStatus){
-					this.powerStatus=false;
-					$.post(this.ctrltype,{did:this.topbox_did,key:'on'},function(data){});
+			tvCtrl(key){
+				if(this.ctrlStatus){
+					tvCtrl(key).then(res =>{});
+					// this.msg=key;
 				}else{
-					this.powerStatus=true;
-					$.post(this.ctrltype,{did:this.topbox_did,key:'off'},function(data){})
+					this.msg=key;
+					tvLearn(key).then(res =>{})
 				}
-			},
-			sendOrder(orderType){
-				$.post(this.ctrltype,{did:this.topbox_did,key:orderType},function(data){
-
-				})
 			}
-		},
-		props:['topbox_did']
+		}
 	}
 </script>
 <style lang="scss" scoped>
 	@import '../../style/mixin';
 	.tvctrl{
 		@include wh(70%,100%);
-		margin: 1rem auto;
+		margin: 2rem auto;
 		background-color: #2c2c2c;
 		border-radius: 2rem;
 		/*padding-top: 1rem;*/
@@ -83,6 +104,7 @@
 					/*border-radius: 40% 40%;*/
 					margin: 1rem 1rem;
 					border: 2px solid #000;
+					line-height: 2rem;
 					span{
 						color: #fff;
 					}
@@ -108,5 +130,13 @@
 			@include wh(100%,100%);
 			transform: rotateZ(90deg);
 		}
+	}
+	.tip{
+		position: absolute;
+		@include wh(100%,1rem);
+		top:4rem;
+		left: 0;
+		text-align: center;
+		line-height: 1rem;
 	}
 </style>

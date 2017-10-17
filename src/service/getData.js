@@ -28,4 +28,21 @@ export const getProtect =  () => fetch('/io/getIoState',{
 export const ptzCtrl =  (dir) => fetch('/camera/ptzControl',{
 	dir:dir
 });
+
+export const tvLearn = (key) => fetch('/tv/irLearn',{
+	key:key
+});
+export const tvCtrl = (key) => fetch('/tv/irControl',{
+	key:key
+});
+
+//厨房控制
+export const commonIoCtrl = (key,state) => fetch('/io/ioControl', {
+	key:key,
+	value:state
+});
+
+export const getIoState =() => fetch('/io/getIoState',{
+	position:'kitchen'
+})
 // export const getImg = () => fetch('')

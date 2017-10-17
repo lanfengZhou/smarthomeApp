@@ -38,6 +38,13 @@
 </script>
 <style lang="scss" scoped>
 	@import '../style/mixin';
+	.home{
+		@include wh(100%,100%);
+
+		/*background-color: #f00;*/
+    	background: url("../assets/home.jpg") no-repeat center; 
+    	background-size:100% auto;
+	}
 	.head_logo{
         left: 0.4rem;
         font-weight: 400;
@@ -54,7 +61,7 @@
     .siderbar{
     	@include wh(50%,100%);
     	@include allcover_left;
-    	background-color: #fff;
+    	background-color: #2c2c2c;
     	z-index:1000;
     	transform: translateX(-100%);
 		-moz-transform: translateX(-100%); /* Firefox 4 */
