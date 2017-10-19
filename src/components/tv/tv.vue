@@ -88,11 +88,13 @@
 	@import '../../style/mixin';
 	.tvctrl{
 		@include wh(70%,100%);
-		margin: 2rem auto;
-		background-color: #2c2c2c;
-		border-radius: 2rem;
-		/*padding-top: 1rem;*/
+		margin: 0 auto;
 		.top{
+			@include wh(100%,auto);
+			margin-top: 4rem;
+			padding-bottom: 2rem;
+			background-color: #2c2c2c;
+			border-radius: 2rem;
 			li{
 				@include wh(100%,3.3rem);
 				@include fj('center');

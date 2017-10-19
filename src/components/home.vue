@@ -3,6 +3,7 @@
 		<headTop v-on:showSlider="showOverlay" head-title="智能家居系统" showSide='true'></headTop>
 		<siderBar :class="{siderbar:true,siderbarEnter:showflag,siderbarLeave:!showflag}" v-on:roomSelect="hideOverlay"></siderBar>
 		<div class="overlay"  v-if="showflag" @click="hideOverlay"></div>
+		<!-- <router-view></router-view> -->
 	</div>
 </template>
 

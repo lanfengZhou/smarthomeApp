@@ -1,9 +1,9 @@
 <template>
 	<div id="video">
-		<headTop head-title="实时监控" goBack='true' :timer='cameratimer'></headTop>
+		<headTop head-title="实时监控" goBack='true' v-on:back='stopPlay'></headTop>
 		<div class="videoframe">
-			<div :class="{zoom_in:status,zoom_out:!status}"  @click="getImg($event)">
-				<img :src="imgsrc" alt="点击播放" class="imgframe" >
+			<div :class="{zoom_in:status,zoom_out:!status}" @click='startPlay'>
+				<img :src="imgsrc" alt="视频获取中.....请检查设备是否在线！！！" class="imgframe"  ref="imgdom">
 				<span v-if="!status" class="c_scale"  @click="zoom($event)">
 					<svg class="icon_style">
             			<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#esc_allover'"></use>
@@ -55,25 +55,36 @@
 				imgurl:'http://192.168.27.100:8080',
 				imgsrc:'',
 				cameratimer:'',
-				status:'true'
+				status:'true',
+				isplay:true
 			}
 			
 		},
 		mounted(){
-		
+			this.getImg();
 		},
 		components:{
 			headTop
 		},
 		methods:{
-			getImg(e){
-				var ele=e.target;
+			getImg(){
+				var ele=this.$refs.imgdom;
 				var that=this;
-				clearInterval(this.cameratimer);
-				this.timer=this.cameratimer;
-				this.cameratimer=setInterval(function(){
-					that.imgsrc=that.imgurl+'/camera/getImage?'+new Date().getTime();
-				},500);
+				function chagesrc(){
+					that.imgsrc=that.imgurl+'/camera/getImage'+new Date().getTime();
+					ele.onload=function(){
+						if(that.isplay){
+							setTimeout(chagesrc,20);
+						}	
+					}
+				}
+				this.cameratimer=setTimeout(chagesrc,20);
+			},
+			startPlay(){
+				this.isplay=true;
+			},
+			stopPlay(){
+				this.isplay=false;
 			},
 			videoCtrl(dir){
 				ptzCtrl(dir).then(res =>{})
@@ -89,9 +100,19 @@
 			}
 
 		},
-		beforeDestroy(){
+		destroyed(){
 			alert("wef");
-			clearInterval(this.cameratimer);
+			clearTimeout(this.cameratimer);
+		},
+		watch:{
+			isplay:function(){
+				if(this.isplay){
+					// this.isplay=false;
+					this.getImg();
+				}else{
+					// this.isplay=true;
+				}	
+			}
 		}
 	}
 </script>

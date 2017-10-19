@@ -37,9 +37,7 @@
 			back(){
 				this.$router.go(-1);
 				// alert(this.timer);
-				if(this.timer){
-					clearInterval(this.timer);
-				}
+				this.$emit('back');
 			},
 			showSlider(){
 				this.$emit('showSlider');

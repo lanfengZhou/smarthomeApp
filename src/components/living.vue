@@ -47,7 +47,7 @@
 				<svg class="over_icon_style">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#led'"></use>
         		</svg><span>吊灯</span>
-        		<svg class="over_icon_style" @click="ctrl('dLed')">
+        		<svg class="over_icon_style switch_icon" @click="ctrl('dLed')">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="dLed"></use>
         		</svg>
         	</div>
@@ -55,7 +55,7 @@
 				<svg class="over_icon_style">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#led'"></use>
         		</svg><span>辅灯</span>
-        		<svg class="over_icon_style" @click="ctrl('fLed')">
+        		<svg class="over_icon_style switch_icon" @click="ctrl('fLed')">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="fLed"></use>
         		</svg>
         	</div>
@@ -65,7 +65,7 @@
 				<svg class="over_icon_style">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#curtain'"></use>
         		</svg><span>窗帘</span>
-        		<svg class="over_icon_style" @click="ctrl('curtain')">
+        		<svg class="over_icon_style switch_icon" @click="ctrl('curtain')">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="curtain"></use>
         		</svg>
         	</div>
@@ -75,7 +75,7 @@
 				<svg class="over_icon_style">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#door'"></use>
         		</svg><span>屋门</span>
-        		<svg class="over_icon_style" @click="ctrl('door')">
+        		<svg class="over_icon_style switch_icon" @click="ctrl('door')">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="door"></use>
         		</svg>
         	</div>
@@ -277,7 +277,10 @@
 	.over_icon_style{
 		@include wh(3rem, 3rem);
 		vertical-align: bottom;
+	}
+	.switch_icon{
 		margin-left: 3rem;
+		margin-bottom: -.7rem;
 	}
 	.overlay{
     	position: fixed;
@@ -317,21 +320,15 @@
 		-o-transform: translateY(-100%); /* Opera */	
     }
     .ctrl{
-    	margin-top:4rem;
-		@include fj('center');
+    	@include wh(100%,100%);
+		@include fj(center);
 		flex-flow: column nowrap;
 
 		.item1{
-			/*flex-basis: 5rem;*/
-			/*background-color: #f00;*/
-			/*flex: 1;*/
-			margin-top: 3rem;
 			text-align: left;
-			vertical-align: bottom;
+			margin-left: 3rem;
+			margin-bottom: 3rem;
 		}
-    }
-    .ctrlenv{
-
     }
     .video{
     	text-align: center!important;

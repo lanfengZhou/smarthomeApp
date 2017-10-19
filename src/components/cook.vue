@@ -42,7 +42,7 @@
 				<svg class="over_icon_style">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#led'"></use>
         		</svg><span>吊灯</span>
-        		<svg class="over_icon_style" @click="ctrl('dLed')">
+        		<svg class="over_icon_style switch_icon" @click="ctrl('dLed')">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="dLed"></use>
         		</svg>
         	</div>
@@ -52,7 +52,7 @@
 				<svg class="over_icon_style">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#fan'"></use>
         		</svg><span>排风扇</span>
-        		<svg class="over_icon_style" @click="ctrl('fan')">
+        		<svg class="over_icon_style switch_icon" @click="ctrl('fan')">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="fan"></use>
         		</svg>
         	</div>
@@ -87,12 +87,12 @@
 				<svg class="over_icon_style">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'#water'"></use>
         		</svg><span>水阀</span>
-        		<svg class="over_icon_style" @click="ctrl('valve')">
+        		<svg class="over_icon_style switch_icon" @click="ctrl('valve')">
             		<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="valve"></use>
         		</svg>
         	</div>
 		</div>
-		<div class="ctrl" v-if="htitle=='智能联动'">
+		<div class="ctrlContact" v-if="htitle=='智能联动'">
 			<div class="item1">
 				<p>=>水浸联动关闭水阀</p>
         	</div>
@@ -203,8 +203,28 @@
 			}
 		},
 		watch:{
-			htitle:function(){
-			}
+			leak:function(){
+				if(this.leak=='"正常"'){
+					this.valve='#switchoff'
+				}else{
+					this.valve='#switchon'
+				}
+			},
+			smoke:function(){
+				if(this.smoke=='"正常"'){
+					this.alarm='#switchoff'
+				}else{
+					this.alarm='#switchon'
+				}
+			},
+			gas:function(){
+				if(this.gas=='"正常"'){
+					this.fan='#switchoff'
+				}else{
+					this.fan='#switchon'
+				}
+			},
+
 		}
 	}
 </script>
@@ -230,7 +250,6 @@
 			/*background-color: #f00;*/
 			flex: 1;
 			text-align: center;
-			align-self: bottom;
 		}
 	}
 	.icon_style{
@@ -242,9 +261,11 @@
 	.over_icon_style{
 		@include wh(3rem, 3rem);
 		vertical-align: bottom;
-		margin-left: 3rem;
 	}
-	.switch_icon{}
+	.switch_icon{
+		margin-left: 3rem;
+		margin-bottom: -.7rem;
+	}
 	.overlay{
     	position: fixed;
     	top:0;
@@ -283,17 +304,24 @@
 		-o-transform: translateY(-100%); /* Opera */	
     }
       .ctrl{
-    	margin-top:4rem;
-		@include fj('center');
+    	@include wh(100%,100%);
+		@include fj(center);
 		flex-flow: column nowrap;
-
 		.item1{
-			/*flex-basis: 5rem;*/
-			/*background-color: #f00;*/
-			/*flex: 1;*/
-			margin-top: 3rem;
 			text-align: left;
-			vertical-align: bottom;
+			margin-left: 3rem;
+			margin-bottom: 3rem;
+		}
+    }
+    .ctrlContact{
+    	@include wh(100%,100%);
+		@include fj(center);
+		flex-flow: column nowrap;
+		.item1{
+			/*flex:1;*/
+			margin-bottom: 5rem;
+			margin-left: 2rem;
+			text-align: left;
 		}
     }
 </style>
